@@ -36,10 +36,15 @@ function Get-NavContainerPath {
                 throw "The path $path does not exist in the container $containerName"
             }
         } else {
+            $match = 0
             $sharedFolders = Get-NavContainerSharedFolders -containerName $containerName
             $sharedFolders.GetEnumerator() | ForEach-Object {
-                if ($path -eq $_.Name -or ($containerPath -eq "" -and $path.StartsWith($_.Name+"\", "OrdinalIgnoreCase"))) {
-                    $containerPath = ($_.Value + $path.Substring($_.Name.Length))
+                if ($path -eq $_.Name -or ($match -ne $path.Length -and $path.StartsWith($_.Name+"\", "OrdinalIgnoreCase"))) {
+                    if($match -lt $_Name.Length)
+                    {
+                        $containerPath = ($_.Value + $path.Substring($_.Name.Length)
+                        $match = $_.Name.Length
+                    }
                 }
             }
             if ($throw -and "$containerPath" -eq "") {
